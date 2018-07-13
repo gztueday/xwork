@@ -1,0 +1,157 @@
+{
+  "descriptors": [
+    {
+      "actionName": "scheduler2_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_1"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "scheduler2_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_2"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "scheduler2_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "scheduler2_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_4"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "scheduler2",
+  "relations": {
+    "scheduler2_1": {
+      "actionName": "scheduler2_1",
+      "children": [
+        "scheduler2_2",
+        "scheduler2_3"
+      ],
+      "fathers": []
+    },
+    "scheduler2_2": {
+      "actionName": "scheduler2_2",
+      "children": [
+        "scheduler2_4"
+      ],
+      "fathers": [
+        "scheduler2_1"
+      ]
+    },
+    "scheduler2_3": {
+      "actionName": "scheduler2_3",
+      "children": [
+        "scheduler2_4"
+      ],
+      "fathers": [
+        "scheduler2_1"
+      ]
+    },
+    "scheduler2_4": {
+      "actionName": "scheduler2_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "scheduler2_2",
+        "scheduler2_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "scheduler2_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "scheduler2_4"
+      ]
+    }
+  }
+}

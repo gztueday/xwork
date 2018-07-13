@@ -1,0 +1,167 @@
+{
+  "descriptors": [
+    {
+      "actionName": "wb_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wb_1"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "wb_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wb_2"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "wb_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wb_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "wb_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wb_4"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "wb1",
+  "relations": {
+    "wb_1": {
+      "actionName": "wb_1",
+      "children": [
+        "wb_2",
+        "wb_3"
+      ],
+      "fathers": []
+    },
+    "wb_2": {
+      "actionName": "wb_2",
+      "children": [
+        "wb_4"
+      ],
+      "fathers": [
+        "wb_1"
+      ],
+      "dependWorkActions": [
+        {
+          "workFlowName": "wc1",
+          "workActionName": "wc_2"
+        },
+        {
+          "workFlowName": "wd1",
+          "workActionName": "wd_2"
+        }
+      ]
+    },
+    "wb_3": {
+      "actionName": "wb_3",
+      "children": [
+        "wb_4"
+      ],
+      "fathers": [
+        "wb_1"
+      ]
+    },
+    "wb_4": {
+      "actionName": "wb_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "wb_2",
+        "wb_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "wb_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "wb_4"
+      ]
+    }
+  }
+}

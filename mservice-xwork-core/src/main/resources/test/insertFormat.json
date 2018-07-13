@@ -1,0 +1,263 @@
+//开始运行接口的json格式
+//{
+//  "workFlowName": "scheduler_test",
+//  "workFlowConfig": [
+//    {
+//      "index": 0,
+//      "value": "11111",
+//      "key": "xxoo",
+//      "actionName": "shell1"
+//    },
+//    {
+//      "index": 0,
+//      "value": "2222222",
+//      "key": "xxoo",
+//      "actionName": "shell2"
+//    }
+//  ]
+//}
+{
+  "workFlowConfig": {
+    "descriptors": [
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "xwork.shell.env": {
+              "setContent": true,
+              "type": "MAP",
+              "content": {
+                "env": "/opt/modules/pp"
+              },
+              "required": true
+            },
+            "xwork.shell.command": {
+              "setContent": true,
+              "type": "STRING",
+              "content": "echo ${xxoo}",
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.ShellAction",
+        "actionName": "shell1"
+      },
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "xwork.shell.env": {
+              "setContent": true,
+              "type": "MAP",
+              "content": {
+                "env": "/opt/modules/pp"
+              },
+              "required": true
+            },
+            "xwork.shell.command": {
+              "setContent": true,
+              "type": "STRING",
+              "content": "echo ${xxoo}",
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.ShellAction",
+        "actionName": "shell2"
+      }
+    ],
+    "relations": {
+      "shell2": {
+        "fathers": [
+          "START"
+        ],
+        "children": [
+          "END"
+        ],
+        "actionName": "shell2"
+      },
+      "shell1": {
+        "fathers": [
+          "START"
+        ],
+        "children": [
+          "END"
+        ],
+        "actionName": "shell1"
+      },
+      "START": {
+        "fathers": [],
+        "children": [
+          "shell1",
+          "shell2"
+        ],
+        "actionName": "START"
+      },
+      "END": {
+        "fathers": [
+          "shell1",
+          "shell2"
+        ],
+        "children": [],
+        "actionName": "END"
+      }
+    },
+    "flowName": "scheduler_test",
+    "uuid": "2",
+    "flowConfig": {
+      "parameters": {
+        "runTime": {
+          "setContent": true,
+          "type": "STRING",
+          "content": "11111",
+          "required": true
+        }
+      }
+    },
+    "requestObj": {
+      "argsArr": "",
+      "blockArr": [
+        {
+          "offset": {
+            "top": 88,
+            "left": 340
+          },
+          "index": 1,
+          "text": {
+            "_type": "START"
+          },
+          "type": "start",
+          "isHide": true
+        },
+        {
+          "offset": {
+            "top": 530,
+            "left": 460
+          },
+          "index": 2,
+          "text": {
+            "_type": "END"
+          },
+          "type": "end",
+          "isHide": true
+        },
+        {
+          "selectArr": "",
+          "offset": {
+            "top": 220,
+            "left": 167
+          },
+          "index": 3,
+          "typeNum": "2",
+          "text": {
+            "arguArr": [
+              {
+                "index": 0,
+                "value": "11111",
+                "key": "xxoo",
+                "actionName": "shell1"
+              }
+            ],
+            "shell": "echo ${xxoo}",
+            "_type": "shell1"
+          },
+          "type": "rectangle",
+          "isHide": true
+        },
+        {
+          "selectArr": "",
+          "offset": {
+            "top": 289,
+            "left": 600
+          },
+          "index": 4,
+          "typeNum": "2",
+          "text": {
+            "arguArr": [
+              {
+                "index": 0,
+                "value": "2222222",
+                "key": "xxoo",
+                "actionName": "shell2"
+              }
+            ],
+            "shell": "echo ${xxoo}",
+            "_type": "shell2"
+          },
+          "type": "rectangle",
+          "isHide": true
+        }
+      ],
+      "relatArr": {
+        "shell2": {
+          "fathers": [
+            "START"
+          ],
+          "children": [
+            "END"
+          ],
+          "actionName": "shell2"
+        },
+        "shell1": {
+          "fathers": [
+            "START"
+          ],
+          "children": [
+            "END"
+          ],
+          "actionName": "shell1"
+        },
+        "START": {
+          "fathers": [],
+          "children": [
+            "shell1",
+            "shell2"
+          ],
+          "actionName": "START"
+        },
+        "END": {
+          "fathers": [
+            "shell1",
+            "shell2"
+          ],
+          "children": [],
+          "actionName": "END"
+        }
+      },
+      "lineArr": [
+        {
+          "start": "BottomCenter",
+          "end": "TopCenter"
+        },
+        {
+          "start": "BottomCenter",
+          "end": "TopCenter"
+        },
+        {
+          "start": "BottomCenter",
+          "end": "TopCenter"
+        },
+        {
+          "start": "BottomCenter",
+          "end": "TopCenter"
+        }
+      ]
+    },
+    "paramsJson": {
+      "workFlowConfig": [
+        {
+          "index": 0,
+          "value": "11111",
+          "key": "xxoo",
+          "actionName": "shell1"
+        },
+        {
+          "index": 0,
+          "value": "2222222",
+          "key": "xxoo",
+          "actionName": "shell2"
+        }
+      ]
+    }
+  }
+}

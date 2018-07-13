@@ -1,0 +1,163 @@
+{
+  "descriptors": [
+    {
+      "actionName": "baction_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/baction_1"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "baction_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/baction_2"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "baction_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "dependWorkActions": [
+        {
+          "workFlowName": "remote_loop_A",
+          "workActionName": "action_3"
+        }
+      ],
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/baction_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "baction_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/baction_4"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "remote_loop_A",
+  "relations": {
+    "baction_1": {
+      "actionName": "baction_1",
+      "children": [
+        "baction_2",
+        "baction_3"
+      ],
+      "fathers": []
+    },
+    "baction_2": {
+      "actionName": "baction_2",
+      "children": [
+        "baction_4"
+      ],
+      "fathers": [
+        "baction_1"
+      ]
+    },
+    "baction_3": {
+      "actionName": "baction_3",
+      "children": [
+        "baction_4"
+      ],
+      "fathers": [
+        "baction_1"
+      ]
+    },
+    "baction_4": {
+      "actionName": "baction_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "baction_2",
+        "baction_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "baction_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "baction_4"
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.banggood.xwork.dao.mapper.SchedulerConfigBundleMapper">
+    <resultMap type="com.banggood.xwork.dao.entity.Bundle" id="BaseResultMap">
+        <result column="remote_instanceid" property="remoteInstanceid"/>
+        <result column="scheduler_name" property="schedulerName"/>
+        <result column="calculate" property="calculate"/>
+        <result column="remote_actions" property="remoteActionStr"/>
+        <result column="depend_action" property="dependAction"/>
+        <result column="version" property="version"/>
+        <result column="reqObj" property="reqObj"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="scheduler_name">
+        INSERT INTO xwork.scheduler_config_relations
+        (remote_instanceid, scheduler_name, calculate, remote_actions, depend_action, version, reqObj)
+        VALUES
+            (#{remoteInstanceid}, #{schedulerName}, #{calculate}, #{remoteActionStr}, #{dependAction},
+             #{version}, #{reqObj})
+    </insert>
+
+    <sql id="base_column">
+        SELECT
+            b.calculate         AS calculate,
+            b.remote_instanceid AS remote_instanceid,
+            b.remote_actions    AS remote_actions,
+            b.depend_action     AS depend_action,
+            b.scheduler_name    AS scheduler_name,
+            b.version           AS version,
+            b.reqObj            AS reqObj
+    </sql>
+
+    <select id="queryBundleConfig" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.scheduler_config_relations b
+        WHERE b.scheduler_name=#{schedulerName}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM xwork.scheduler_config_relations
+        WHERE scheduler_name = #{schedulerName}
+    </delete>
+
+</mapper>

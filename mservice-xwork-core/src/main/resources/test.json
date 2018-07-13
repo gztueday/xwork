@@ -1,0 +1,290 @@
+{
+  "actions": [
+    {
+      "actionName": "scheduler2_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "conditionPass": false,
+      "config": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_1"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      },
+      "dependendWorkActions": [],
+      "endTime": 0,
+      "formatName": "null_scheduler2_1_null_-1",
+      "outPut": {
+        "ShellActionRunTime:": "Mon Feb 05 18:25:15 CST 2018"
+      },
+      "remoteDepend": [],
+      "runParam": {
+        "parameters": {}
+      },
+      "runTime": 0,
+      "schedulerid": -1,
+      "share": false,
+      "startTime": 0,
+      "status": "DISTRIBUTED",
+      "submit": true
+    },
+    {
+      "actionName": "scheduler2_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "conditionPass": false,
+      "config": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_2"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      },
+      "dependendWorkActions": [],
+      "endTime": 0,
+      "formatName": "null_scheduler2_2_null_-1",
+      "outPut": {
+        "ShellActionRunTime:": "Mon Feb 05 18:25:15 CST 2018"
+      },
+      "remoteDepend": [],
+      "runParam": {
+        "parameters": {}
+      },
+      "runTime": 0,
+      "schedulerid": -1,
+      "share": false,
+      "startTime": 0,
+      "status": "DISTRIBUTED",
+      "submit": true
+    },
+    {
+      "actionName": "scheduler2_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "conditionPass": false,
+      "config": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      },
+      "dependendWorkActions": [],
+      "endTime": 0,
+      "formatName": "null_scheduler2_3_null_-1",
+      "outPut": {
+        "ShellActionRunTime:": "Mon Feb 05 18:25:15 CST 2018"
+      },
+      "remoteDepend": [],
+      "runParam": {
+        "parameters": {}
+      },
+      "runTime": 0,
+      "schedulerid": -1,
+      "share": false,
+      "startTime": 0,
+      "status": "DISTRIBUTED",
+      "submit": true
+    },
+    {
+      "actionName": "scheduler2_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "conditionPass": false,
+      "config": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/scheduler2_4"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      },
+      "dependendWorkActions": [],
+      "endTime": 0,
+      "formatName": "null_scheduler2_4_null_-1",
+      "outPut": {
+        "ShellActionRunTime:": "Mon Feb 05 18:25:15 CST 2018"
+      },
+      "remoteDepend": [],
+      "runParam": {
+        "parameters": {}
+      },
+      "runTime": 0,
+      "schedulerid": -1,
+      "share": false,
+      "startTime": 0,
+      "status": "DISTRIBUTED",
+      "submit": true
+    }
+  ],
+  "addCondition": {},
+  "config": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "configerid": 2,
+  "dependcyWorkActions": [],
+  "emails": [],
+  "endTime": 0,
+  "flowName": "scheduler2",
+  "lock": {
+    "fair": false,
+    "heldByCurrentThread": false,
+    "holdCount": 0,
+    "locked": false,
+    "queueLength": 0
+  },
+  "relations": {
+    "scheduler2_2": {
+      "actionName": "scheduler2_2",
+      "children": [
+        "scheduler2_4"
+      ],
+      "dependWorkActions": [
+        {
+          "remoteSwitch": false,
+          "schedulerid": 0,
+          "workActionName": "scheduler1_3",
+          "workFlowName": "scheduler1"
+        }
+      ],
+      "fathers": [
+        "scheduler2_1"
+      ],
+      "remoteDepends": [
+        {
+          "workActionName": "scheduler3_2",
+          "workFlowName": "scheduler3"
+        }
+      ]
+    },
+    "scheduler2_3": {
+      "actionName": "scheduler2_3",
+      "children": [
+        "scheduler2_4"
+      ],
+      "dependWorkActions": [
+        {
+          "remoteSwitch": true,
+          "schedulerid": 0,
+          "workActionName": "scheduler1_3",
+          "workFlowName": "scheduler1"
+        }
+      ],
+      "fathers": [
+        "scheduler2_1"
+      ],
+      "remoteDepends": [
+        {
+          "workActionName": "scheduler3_2",
+          "workFlowName": "scheduler3"
+        }
+      ]
+    },
+    "START": {
+      "actionName": "START",
+      "children": [
+        "scheduler2_1"
+      ],
+      "dependWorkActions": [],
+      "fathers": [],
+      "remoteDepends": []
+    },
+    "END": {
+      "children": [],
+      "dependWorkActions": [],
+      "fathers": [
+        "scheduler2_4"
+      ],
+      "remoteDepends": []
+    },
+    "scheduler2_1": {
+      "actionName": "scheduler2_1",
+      "children": [
+        "scheduler2_2",
+        "scheduler2_3"
+      ],
+      "dependWorkActions": [],
+      "fathers": [],
+      "remoteDepends": []
+    },
+    "scheduler2_4": {
+      "actionName": "scheduler2_4",
+      "children": [
+        "END"
+      ],
+      "dependWorkActions": [],
+      "fathers": [
+        "scheduler2_2",
+        "scheduler2_3"
+      ],
+      "remoteDepends": []
+    }
+  },
+  "remoteWorkFlows": [],
+  "runParam": {
+    "parameters": {}
+  },
+  "runTime": 0,
+  "runningActions": {},
+  "share": false,
+  "startTime": 0,
+  "submiter": 0,
+  "time": 1,
+  "tyrTime": 5,
+  "updaterid": 0,
+  "version": 0,
+  "workDaoService": {
+    "localIp": "dubbo://192.168.2.1:20880/com.banggood.xwork.api.entity.IWebExecutorController"
+  }
+}

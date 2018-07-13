@@ -1,0 +1,267 @@
+{
+  "workFlowConfig": {
+    "descriptors": [
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "HSql.Path": {
+              "setContent": true,
+              "type": "STRING",
+              "content": "1",
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.HiveAction",
+        "actionName": "Hive"
+      },
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "xwork.shell.env": {
+              "setContent": true,
+              "type": "MAP",
+              "content": {
+                "env": "/opt/modules/pp"
+              },
+              "required": true
+            },
+            "xwork.shell.command": {
+              "setContent": true,
+              "type": "STRING",
+              "content": 2,
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.ShellAction",
+        "actionName": "Shell"
+      },
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "path": ""
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.KettleAction",
+        "actionName": "Kettle"
+      }
+    ],
+    "copy": [
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "HSql.Path": {
+              "setContent": true,
+              "type": "STRING",
+              "content": "1",
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.HiveAction",
+        "actionName": "Hive"
+      },
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "xwork.shell.env": {
+              "setContent": true,
+              "type": "MAP",
+              "content": {
+                "env": "/opt/modules/pp"
+              },
+              "required": true
+            },
+            "xwork.shell.command": {
+              "setContent": true,
+              "type": "STRING",
+              "content": 2,
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.ShellAction",
+        "actionName": "Shell"
+      },
+      {
+        "actionType": "NORMORL",
+        "configs": {
+          "parameters": {
+            "-dir": {
+              "setContent": true,
+              "type": "STRING",
+              "content": 4,
+              "required": true
+            },
+            "-job": {
+              "setContent": true,
+              "type": "STRING",
+              "content": 3,
+              "required": true
+            },
+            "-rep": {
+              "setContent": true,
+              "type": "STRING",
+              "content": 5,
+              "required": true
+            }
+          }
+        },
+        "clazz": "com.banggood.xwork.action.impl.KettleAction",
+        "actionName": "Kettle"
+      }
+    ],
+    "relations": {
+      "flowchartWindow3": {
+        "fathers": [
+          "START"
+        ],
+        "children": [
+          "flowchartWindow4"
+        ],
+        "actionName": "flowchartWindow3"
+      },
+      "START": {
+        "fathers": [],
+        "children": [
+          "flowchartWindow3"
+        ],
+        "actionName": "START"
+      },
+      "END": {
+        "fathers": [
+          "flowchartWindow5"
+        ],
+        "children": [],
+        "actionName": "END"
+      },
+      "flowchartWindow4": {
+        "fathers": [
+          "flowchartWindow3"
+        ],
+        "children": [
+          "END"
+        ],
+        "actionName": "flowchartWindow4"
+      }
+    },
+    "flowName": "relation_B",
+    "uuid": "2",
+    "flowConfig": {
+      "parameters": {
+        "runTime": {
+          "setContent": true,
+          "type": "STRING",
+          "content": "11111",
+          "required": true
+        }
+      }
+    },
+    "requestObj": [
+      {
+        "offset": {
+          "top": 0,
+          "left": 0
+        },
+        "index": 1,
+        "type": "start",
+        "isHide": true
+      },
+      {
+        "offset": {
+          "top": 500,
+          "left": 600
+        },
+        "index": 99,
+        "type": "end",
+        "isHide": true
+      },
+      {
+        "selectArr": "",
+        "offset": {
+          "top": 80,
+          "left": 366
+        },
+        "index": 3,
+        "typeNum": "1",
+        "text": {
+          "_type": "Hive",
+          "_path": "1"
+        },
+        "type": "rectangle",
+        "isHide": true
+      },
+      {
+        "selectArr": "",
+        "offset": {
+          "top": 177,
+          "left": 466
+        },
+        "index": 4,
+        "typeNum": "2",
+        "text": {
+          "shell": 2,
+          "_type": "Shell"
+        },
+        "type": "rectangle",
+        "isHide": true
+      },
+      {
+        "selectArr": "",
+        "offset": {
+          "top": 280,
+          "left": 571
+        },
+        "index": 5,
+        "typeNum": "3",
+        "text": {
+          "_type": "Kettle",
+          "job": 3,
+          "dir": 4,
+          "rep": 5
+        },
+        "type": "rectangle",
+        "isHide": true
+      }
+    ]
+  }
+}
+
+//{
+//  "scheduler1_3": {
+//    "actionName": "scheduler1_3",
+//    "children": [],
+//    "dependWorkActions": [],
+//    "fathers": [],
+//    "remoteDepends": [
+//      {
+//        "calculate": -53011678,
+//        "dependSchedulerInstanceid": "scheduler_3f2ee41b-23ce-4f66-a726-67e6989d6541_num_1521510735996",
+//        "dependWorkFlowName": "scheduler_one",
+//        "remoteActionName": "scheduler1_3",
+//        "remoteDependName": "scheduler1_3"
+//      }
+//    ]
+//  },
+//  "scheduler1_2": {
+//    "actionName": "scheduler1_2",
+//    "children": [],
+//    "dependWorkActions": [],
+//    "fathers": [],
+//    "remoteDepends": [
+//      {
+//        "calculate": -53011678,
+//        "dependSchedulerInstanceid": "scheduler_3f2ee41b-23ce-4f66-a726-67e6989d6541_num_1521510735996",
+//        "dependWorkFlowName": "scheduler_one",
+//        "remoteActionName": "scheduler1_2",
+//        "remoteDependName": "scheduler1_3"
+//      }
+//    ]
+//  }
+//}

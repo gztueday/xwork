@@ -1,0 +1,179 @@
+{
+  "descriptors": [
+    {
+      "actionName": "dw_fop_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.KettleAction",
+      "configs": {
+        "parameters": {
+          "-job": {
+            "content": "a_t_fap_dw_bill_f",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-dir": {
+            "content": "/job",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-rep": {
+            "content": "dw_etl",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "dw_fop_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.KettleAction",
+      "dependWorkActions": [
+        {
+          "workFlowName": "dw_log",
+          "workActionName": "dw_log_1"
+        }
+      ],
+      "configs": {
+        "parameters": {
+          "-job": {
+            "content": "a_t_fap_dw_bill_f",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-dir": {
+            "content": "/job",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-rep": {
+            "content": "dw_etl",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "dw_fop_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.KettleAction",
+      "configs": {
+        "parameters": {
+          "-job": {
+            "content": "a_t_fap_dw_bill_f",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-dir": {
+            "content": "/job",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-rep": {
+            "content": "dw_etl",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "dw_fop_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.KettleAction",
+      "configs": {
+        "parameters": {
+          "-job": {
+            "content": "a_t_fap_dw_bill_f",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-dir": {
+            "content": "/job",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          },
+          "-rep": {
+            "content": "dw_etl",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "dw_fop",
+  "relations": {
+    "dw_fop_1": {
+      "actionName": "dw_fop_1",
+      "children": [
+        "dw_fop_2",
+        "dw_fop_3"
+      ],
+      "fathers": []
+    },
+    "dw_fop_2": {
+      "actionName": "dw_fop_2",
+      "children": [
+        "dw_fop_4"
+      ],
+      "fathers": [
+        "dw_fop_1"
+      ]
+    },
+    "dw_fop_3": {
+      "actionName": "dw_fop_3",
+      "children": [
+        "dw_fop_4"
+      ],
+      "fathers": [
+        "dw_fop_1"
+      ]
+    },
+    "dw_fop_4": {
+      "actionName": "dw_fop_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "dw_fop_2",
+        "dw_fop_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "dw_fop_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "dw_fop_4"
+      ]
+    }
+  }
+}

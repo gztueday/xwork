@@ -1,0 +1,78 @@
+{
+  "coordinatorName": "coordinator_test_5",
+  "description": "asdfasdfasd",
+  "schedulerWorkFlows": [
+    {
+      "dependActionNames": [
+        "scheduler2_2"
+      ],
+      "dependCronStr": "0/10 * * * * ? ",
+      "dependSchedulerName": "right_scheduler2",
+      "dependWorkFlowName": "scheduler2",
+      "remoteActionName": "scheduler1_3",
+      "remoteCronStr": "0/5 * * * * ? ",
+      "remoteSchedulerName": "left_scheduler1",
+      "remoteWorkFlowName": "scheduler1"
+    },
+    {
+      "dependActionNames": [
+        "scheduler2_3"
+      ],
+      "dependCronStr": "0/10 * * * * ? ",
+      "dependSchedulerName": "right_scheduler2",
+      "dependWorkFlowName": "scheduler2",
+      "remoteActionName": "scheduler1_3",
+      "remoteCronStr": "0/5 * * * * ? ",
+      "remoteSchedulerName": "left_scheduler1",
+      "remoteWorkFlowName": "scheduler1"
+    },
+    {
+      "dependActionNames": [
+        "scheduler3_2"
+      ],
+      "dependCronStr": "0/20 * * * * ? ",
+      "dependSchedulerName": "right_scheduler3",
+      "dependWorkFlowName": "scheduler3",
+      "remoteActionName": "scheduler2_3",
+      "remoteCronStr": "0/15 * * * * ? ",
+      "remoteSchedulerName": "left_scheduler2",
+      "remoteWorkFlowName": "scheduler2"
+    },
+    {
+      "dependActionNames": [
+        "scheduler3_2"
+      ],
+      "dependCronStr": "0/20 * * * * ? ",
+      "dependSchedulerName": "right_scheduler3",
+      "dependWorkFlowName": "scheduler3",
+      "remoteActionName": "scheduler2_2",
+      "remoteCronStr": "0/15 * * * * ? ",
+      "remoteSchedulerName": "left_scheduler2",
+      "remoteWorkFlowName": "scheduler2"
+    },
+    {
+      "dependActionNames": [
+        "scheduler4_2"
+      ],
+      "dependCronStr": "0/30 * * * * ? ",
+      "dependSchedulerName": "right_scheduler4",
+      "dependWorkFlowName": "scheduler4",
+      "remoteActionName": "scheduler3_3",
+      "remoteCronStr": "0/25 * * * * ? ",
+      "remoteSchedulerName": "left_scheduler3",
+      "remoteWorkFlowName": "scheduler3"
+    },
+    {
+      "dependActionNames": [
+        "scheduler5_2"
+      ],
+      "dependCronStr": "0/40 * * * * ? ",
+      "dependSchedulerName": "right_scheduler5",
+      "dependWorkFlowName": "scheduler5",
+      "remoteActionName": "scheduler4_3",
+      "remoteCronStr": "0/35 * * * * ? ",
+      "remoteSchedulerName": "left_scheduler4",
+      "remoteWorkFlowName": "scheduler4"
+    }
+  ]
+}

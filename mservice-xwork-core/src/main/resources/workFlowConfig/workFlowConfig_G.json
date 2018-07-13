@@ -1,0 +1,149 @@
+{
+  "descriptors": [
+    {
+      "actionName": "faction_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "faction_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "faction_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "faction_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.DemoAction",
+      "configs": {
+        "parameters": {
+          "sleep": {
+            "content": "300",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "test-G",
+  "relations": {
+    "faction_1": {
+      "actionName": "faction_1",
+      "children": [
+        "faction_2",
+        "faction_3"
+      ],
+      "fathers": []
+    },
+    "faction_2": {
+      "actionName": "faction_2",
+      "children": [
+        "faction_4"
+      ],
+      "fathers": [
+        "faction_1"
+      ]
+    },
+    "faction_3": {
+      "actionName": "faction_3",
+      "children": [
+        "faction_4"
+      ],
+      "fathers": [
+        "faction_1"
+      ]
+    },
+    "faction_4": {
+      "actionName": "faction_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "faction_2",
+        "faction_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "faction_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "faction_4"
+      ]
+    }
+  }
+}

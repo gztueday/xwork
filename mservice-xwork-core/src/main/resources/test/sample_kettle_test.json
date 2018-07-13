@@ -1,0 +1,52 @@
+{
+  "descriptors": [
+    {
+      "actionName": "kettle",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.KettleAction",
+      "configs": {
+        "parameters": {
+          "path": {
+            "content": "/a_t_tes_shell",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "sample_kettle_test",
+  "relations": {
+    "kettle": {
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "START"
+      ]
+    },
+    "START": {
+      "children": [
+        "kettle"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "kettle"
+      ]
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "descriptors": [
+    {
+      "actionName": "dw_sale_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/dw_sale_1"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "dw_sale_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/dw_sale_2"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "dw_sale_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "dependWorkActions": [
+        {
+          "workFlowName": "dw_fop_shell",
+          "workActionName": "dw_fop_4"
+        }
+      ],
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/dw_sale_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "dw_sale_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/dw_sale_4"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "dw_sale_shell",
+  "relations": {
+    "dw_sale_1": {
+      "actionName": "dw_sale_1",
+      "children": [
+        "dw_sale_2",
+        "dw_sale_3"
+      ],
+      "fathers": []
+    },
+    "dw_sale_2": {
+      "actionName": "dw_sale_2",
+      "children": [
+        "dw_sale_4"
+      ],
+      "fathers": [
+        "dw_sale_1"
+      ]
+    },
+    "dw_sale_3": {
+      "actionName": "dw_sale_3",
+      "children": [
+        "dw_sale_4"
+      ],
+      "fathers": [
+        "dw_sale_1"
+      ]
+    },
+    "dw_sale_4": {
+      "actionName": "dw_sale_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "dw_sale_2",
+        "dw_sale_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "dw_sale_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "dw_sale_4"
+      ]
+    }
+  }
+}

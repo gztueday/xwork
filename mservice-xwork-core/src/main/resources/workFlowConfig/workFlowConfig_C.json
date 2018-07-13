@@ -1,0 +1,221 @@
+{
+  "descriptors": [
+    {
+      "actionName": "caction_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "caction_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "caction_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "caction_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.DemoAction",
+      "cacheRelation": {
+        "dependWorkFlow": "test-D",
+        "dependAction": "daction_3"
+      },
+      "configs": {
+        "parameters": {
+          "sleep": {
+            "content": "300",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "caction_5",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "caction_6",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/action_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "test-C",
+  "relations": {
+    "caction_1": {
+      "actionName": "caction_1",
+      "children": [
+        "caction_2",
+        "caction_3",
+        "caction_4"
+      ],
+      "fathers": []
+    },
+    "caction_2": {
+      "actionName": "caction_2",
+      "children": [
+        "caction_5"
+      ],
+      "fathers": [
+        "caction_1"
+      ]
+    },
+    "caction_3": {
+      "actionName": "caction_3",
+      "children": [
+        "caction_5",
+        "caction_6"
+      ],
+      "fathers": [
+        "caction_1"
+      ]
+    },
+    "caction_4": {
+      "actionName": "caction_4",
+      "children": [
+        "caction_5"
+      ],
+      "fathers": [
+        "caction_1"
+      ]
+    },
+    "caction_5": {
+      "actionName": "caction_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "caction_2",
+        "caction_3",
+        "caction_4"
+      ]
+    },
+    "caction_6": {
+      "actionName": "caction_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "caction_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "caction_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "caction_5",
+        "caction_6"
+      ]
+    }
+  }
+}

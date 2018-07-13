@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--suppress ALL -->
+<mapper namespace="com.banggood.xwork.dao.mapper.WorkFlowInfoMapper">
+    <resultMap type="com.banggood.xwork.dao.entity.WorkFlowInfo" id="BaseResultMap">
+        <id column="flow_name" property="flowName"/>
+        <result column="relations_json" property="relationsJson"/>
+        <result column="configer_id" property="configerid"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="share" property="share"/>
+        <result column="updater_id" property="updaterid"/>
+        <result column="actions_json" property="actions"/>
+        <result column="config_param_json" property="configParamJSON"/>
+        <result column="dependName" property="dependName"/>
+        <result column="emails" property="emails"/>
+        <result column="create_time" property="createTime"/>
+        <result column="requestObj" property="requestObj"/>
+        <result column="uuid" property="uuid"/>
+        <result column="paramMap" property="paramJson"/>
+        <result column="description" property="description"/>
+        <result column="subWorkFlow_json" property="subWorkFlowJson"/>
+    </resultMap>
+
+    <sql id="base_column">
+        SELECT
+            w.flow_name         AS flow_name,
+            w.config_param_json AS config_param_json,
+            w.actions_json      AS actions_json,
+            w.relations_json    AS relations_json,
+            w.configer_id       AS configer_id,
+            w.share,
+            w.last_update_time  AS last_update_time,
+            w.create_time       AS create_time,
+            w.dependName        AS dependName,
+            w.requestObj        AS requestObj,
+            w.paramMap          AS paramMap,
+            w.description       AS description,
+            w.subWorkFlow_json  AS subWorkFlow_json
+    </sql>
+
+    <sql id="base_where">
+        <where>
+            w.last_update_time &gt;=#{beginDate} and w.last_update_time &lt;=#{endDate} and w.delete=0
+            <if test="keyword!=null">
+                AND `flow_name` LIKE concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="getWorkFlowAll" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        from xwork.work_flow w
+        <include refid="base_where"/>
+        ORDER BY w.last_update_time DESC
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryForCount" resultType="int">
+        SELECT count(w.flow_name) FROM xwork.work_flow w
+        <include refid="base_where"/>
+    </select>
+
+    <update id="deleteWorkFlowByName">
+        UPDATE xwork.work_flow
+        SET `delete` = 1
+        WHERE flow_name = #{flowName}
+    </update>
+
+    <select id="getWorkActionFlowByName" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow w
+        WHERE flow_name = #{flowName} AND `delete`=0
+    </select>
+
+    <select id="getWorkFlowForUUID" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow w
+        WHERE uuid = #{uuid} AND `delete`=0
+    </select>
+
+    <select id="getWorkFlowForCount" resultType="int">
+        SELECT count(1)
+        FROM xwork.work_flow
+        WHERE flow_name = #{flowName}
+    </select>
+
+    <select id="queryByName" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow w
+        WHERE w.`flow_name` LIKE concat('%',#{workFlowName},'%') AND w.`delete`=0
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryByNameForCount" resultType="int">
+        SELECT count(w.flow_name)
+        FROM xwork.work_flow w
+        WHERE w.`flow_name` LIKE concat('%', #{workFlowName}, '%') AND w.`delete` = 0
+    </select>
+
+    <update id="update">
+        UPDATE xwork.work_flow
+        SET flow_name         = #{flowName},
+            config_param_json = #{configParamJSON},
+            relations_json    = #{relationsJSON},
+            actions_json      = #{actionsJSON},
+            configer_id       = #{configerid},
+            `share`           = #{share},
+            last_update_time  = #{lastUpdateTime},
+            dependName        = #{dependName},
+            emails            = #{emails},
+            create_time       = #{createTime},
+            requestObj        = #{requestObj},
+            description       = #{description}
+        WHERE `delete` = 0 AND uuid = #{uuid};
+    </update>
+
+    <delete id="realDeByName">
+        DELETE FROM xwork.work_flow
+        WHERE flow_name = #{flowName}
+    </delete>
+
+    <sql id="flow_name">
+        <if test="workFlowName!=null">
+            WHERE w.`flow_name` LIKE concat('%', #{workFlowName}, '%') AND w.`delete` = 0
+        </if>
+    </sql>
+
+    <select id="queryWorkFlowByName" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow w
+        <include refid="flow_name"/>
+    </select>
+
+</mapper>

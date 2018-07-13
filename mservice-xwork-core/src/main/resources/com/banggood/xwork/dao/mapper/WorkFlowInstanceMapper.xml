@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--suppress ALL -->
+<mapper namespace="com.banggood.xwork.dao.mapper.WorkFlowInstanceMapper">
+    <resultMap type="com.banggood.xwork.dao.entity.WorkFlowInstance" id="BaseResultMap">
+        <id column="instance_id" property="instanceid"/>
+        <result column="flow_name" property="flowName"/>
+        <result column="scheduler_id" property="schedulerid"/>
+        <result column="configer_id" property="configerid"/>
+        <result column="status" property="status"/>
+        <result column="run_time" property="runTime"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="submiter_id" property="submiter"/>
+        <result column="run_param_json" property="runParamJSON"/>
+        <result column="config_param_json" property="configParamJSON"/>
+        <result column="work_flow_json" property="workFlowInfoJSON"/>
+        <result column="execute_ip" property="executeIP"/>
+        <result column="father_instanceid" property="fatherInstanceId"/>
+        <result column="versions" property="versions"/>
+        <result column="running_params" property="runningParams"/>
+        <result column="subWorkFlow_json" property="subWorkFlowJson"/>
+    </resultMap>
+
+    <sql id="base_column">
+        SELECT
+            wi.flow_name         AS flowName,
+            wi.scheduler_id      AS schedulerid,
+            wi.run_time          AS `runTime`,
+            wi.start_time        AS startTime,
+            wi.end_time          AS endTime,
+            wi.submiter_id       AS submiter,
+            wi.run_param_json    AS runParamJSON,
+            wi.config_param_json AS configParamJSON,
+            wi.work_flow_json    AS workFlowInfoJSON,
+            wi.instance_id       AS instanceid,
+            wi.execute_ip        AS executeIP,
+            wi.`status`          AS `status`,
+            wi.father_instanceid AS father_instanceid,
+            wi.versions          AS versions,
+            wi.running_params    AS runningParams,
+            wi.subWorkFlow_json  AS subWorkFlow_json
+    </sql>
+
+    <sql id="base_where">
+        <where>
+            wi.run_time &gt;=#{beginDate}
+            AND wi.run_time &lt;=#{endDate}
+            AND wi.delete=0
+            <if test="status!=null">
+                AND `status`=#{status}
+            </if>
+            <if test="keyword!=null">
+                AND wi.`flow_name` LIKE concat('%',#{keyword},'%')
+                OR wi.instance_id LIKE concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="queryForCount" resultType="int">
+        SELECT count(wi.instance_id) FROM xwork.work_flow_instance wi
+        <include refid="base_where"/>
+    </select>
+
+    <select id="query" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        <include refid="base_where"/>
+        ORDER BY wi.run_time DESC
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="getFlowInstancesByStatus" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        WHERE wi.`status` = #{status} AND wi.delete = 0
+    </select>
+
+    <update id="delete">
+        UPDATE xwork.work_flow_instance
+        SET `delete` = 1
+        WHERE instance_id = #{instanceid}
+    </update>
+
+    <select id="selectByFatherInstanceId" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        WHERE wi.father_instanceid=#{instanceId} AND wi.`delete` = 0
+    </select>
+
+    <select id="selectWorkInstanceByid" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        WHERE wi.instance_id=#{instanceId} AND wi.`delete` = 0
+    </select>
+
+    <update id="updateWorkFlowInstance">
+        UPDATE xwork.work_flow_instance
+        SET work_flow_json = #{workFlowInfoJSON}
+        WHERE instance_id = #{instanceid} AND `delete` = 0
+    </update>
+
+    <select id="selectWorkInstance" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        WHERE wi.`delete` = 0 AND wi.father_instanceid=#{fatherInstanceId}
+        AND wi.flow_name=#{workFlowName}
+    </select>
+
+    <select id="selectWorkInstanceWithVersions" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        WHERE wi.`delete` = 0 AND wi.father_instanceid=#{fatherInstanceId}
+        AND wi.flow_name=#{workFlowName} AND versions=#{versions}
+    </select>
+
+    <update id="updateStatus">
+        UPDATE xwork.work_flow_instance
+        SET `status` = #{status}
+        WHERE `delete` = 0 AND instance_id = #{instanceid}
+    </update>
+
+    <update id="updateWorkFlowInstanceStatus">
+        UPDATE xwork.work_flow_instance
+        SET `status` = #{status}, start_Time = #{startTime}, run_time = #{runTime}
+        WHERE `delete` = 0 AND versions = #{versions} AND scheduler_id = #{schedulerid}
+              AND father_instanceid = #{fatherInstanceId}
+    </update>
+
+    <update id="updateWorkFlowJson">
+        UPDATE xwork.work_flow_instance
+        SET work_flow_json = #{workFlowJson}
+        WHERE `delete` = 0 AND versions = #{versions} AND scheduler_id = #{schedulerid}
+              AND father_instanceid = #{fatherInstanceId};
+    </update>
+
+    <select id="selectInstance" resultType="string">
+        SELECT scheduler_id
+        FROM xwork.work_flow_instance
+        WHERE `delete` = 0 AND versions = 1 AND father_instanceid = #{fatherInstanceId}
+              AND flow_name = #{workFlowName};
+    </select>
+
+    <select id="selectByFatherInstanceIdForRunningORPending" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_instance wi
+        WHERE wi.`delete`=0 AND wi.father_instanceid = #{fatherId}
+        AND wi.`status`= #{running} OR wi.`status`= #{pending} OR wi.`status` is null
+    </select>
+
+    <update id="bundleSchedulerRelation">
+        UPDATE xwork.work_flow_instance
+        SET work_flow_json = #{workFlowJson}
+        WHERE wi.`delete` = 0 AND wi.instance_id = #{instanceId}
+    </update>
+
+    <select id="queryWorkFlowInstanceIp" resultType="string">
+        SELECT execute_ip
+        FROM xwork.work_flow_instance
+        WHERE instance_id = #{wfInstanceid}
+    </select>
+</mapper>

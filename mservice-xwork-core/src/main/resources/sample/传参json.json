@@ -1,0 +1,4 @@
+{
+  "flowName": "simple_shell",
+  "parameters": "[{\"arguments\":{\"action_1\":{\"params1\":\"-------------------参数1----------------\"},\"action_2\":{\"params2\":\"-------------------参数2----------------\"},\"action_3\":{\"params3\":\"-------------------参数3----------------\"}},\"workflowName\":\"simple_shell\"}]"
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.banggood.xwork.dao.mapper.WorkFlowRelationMapper">
+    <resultMap type="com.banggood.xwork.dao.entity.WorkFlowInfo" id="BaseResultMap">
+        <id column="flow_name" property="flowName"/>
+        <result column="relations_json" property="relationsJson"/>
+        <result column="configer_id" property="configerid"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="share" property="share"/>
+        <result column="updater_id" property="updaterid"/>
+        <result column="actions_json" property="actionsJson"/>
+        <result column="config_param_json" property="configParamJSON"/>
+        <result column="dependName" property="dependName"/>
+        <result column="emails" property="emails"/>
+        <result column="create_time" property="createTime"/>
+        <result column="requestObj" property="requestObj"/>
+        <result column="uuid" property="uuid"/>
+        <result column="flow_relation" property="flowRelation"/>
+    </resultMap>
+
+    <sql id="base_column">
+        SELECT
+            w.flow_name         AS flowName,
+            w.config_param_json AS configParamJSON,
+            w.actions_json      AS actionsJSON,
+            w.relations_json    AS relationsJSON,
+            w.configer_id       AS configerid,
+            w.share,
+            w.last_update_time  AS lastUpdateTime,
+            w.create_time       AS createTime,
+            w.dependName        AS dependName,
+            w.requestObj        AS requestObj,
+            w.flow_relation     AS flow_relation,
+            w.uuid              AS uuid
+    </sql>
+
+    <select id="getWorkFlowByName" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_relations w
+        WHERE w.flow_name = #{flowName} AND w.flow_relation=#{fatherName} AND w.`delete`=0
+    </select>
+
+    <update id="updateRelationJson">
+        UPDATE xwork.work_flow_relations
+        SET relations_json = #{workActionRelation}
+        WHERE `delete` = 0 AND flow_name = #{flowName} AND flow_relation = #{fatherName};
+    </update>
+
+    <select id="selectByRelation" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.work_flow_relations w
+        WHERE `delete` = 0 AND w.flow_relation =#{fatherName}
+    </select>
+
+    <update id="deleteByRelation">
+        UPDATE xwork.work_flow_relations
+        SET `delete` = 1
+        WHERE flow_name = #{flowName} AND flow_relation = #{flowRelation};
+    </update>
+
+</mapper>

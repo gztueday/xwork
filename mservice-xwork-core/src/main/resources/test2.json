@@ -1,0 +1,36 @@
+//[
+//  {
+//    "arguments": {
+//      "actionName": {
+//        "params1": "value"
+//      }
+//    },
+//    "workflowName": "simple_shell"
+//  }
+//]
+
+//{
+//  "workFlowName": "relation_B",
+//  "workFlowConfig": [
+//    {
+//      "index": 0,
+//      "value": "aaa",
+//      "key": "231",
+//      "actionName": "Shell"
+//    }
+//  ]
+//}
+
+{
+  "actions": "[{\"actionClass\":\"com.banggood.xwork.action.impl.ShellAction\",\"actionName\":\"action_1\",\"actionType\":\"NORMORL\",\"configParamJSON\":\"{\\\"parameters\\\":{\\\"xwork.shell.env\\\":{\\\"content\\\":{\\\"env\\\":\\\"/opt/modules/action_1\\\"},\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"MAP\\\"},\\\"xwork.shell.command\\\":{\\\"content\\\":\\\"/bin/bash -c \\\\\\\"for((i=1;i<=10;i++));do echo -------------------参数1---------------- ;sleep 1;done\\\\\\\"\\\",\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"STRING\\\"}}}\",\"configerid\":0,\"flowName\":\"simple_shell\",\"share\":false,\"submiter\":0,\"updaterid\":0},{\"actionClass\":\"com.banggood.xwork.action.impl.ShellAction\",\"actionName\":\"action_2\",\"actionType\":\"NORMORL\",\"configParamJSON\":\"{\\\"parameters\\\":{\\\"xwork.shell.env\\\":{\\\"content\\\":{\\\"env\\\":\\\"/opt/modules/action_2\\\"},\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"MAP\\\"},\\\"xwork.shell.command\\\":{\\\"content\\\":\\\"/bin/bash -c \\\\\\\"for((i=1;i<=10;i++));do echo -------------------参数2---------------- ;sleep 1;done\\\\\\\"\\\",\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"STRING\\\"}}}\",\"configerid\":0,\"flowName\":\"simple_shell\",\"share\":false,\"submiter\":0,\"updaterid\":0},{\"actionClass\":\"com.banggood.xwork.action.impl.ShellAction\",\"actionName\":\"action_3\",\"actionType\":\"NORMORL\",\"configParamJSON\":\"{\\\"parameters\\\":{\\\"xwork.shell.env\\\":{\\\"content\\\":{\\\"env\\\":\\\"/opt/modules/action_3\\\"},\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"MAP\\\"},\\\"xwork.shell.command\\\":{\\\"content\\\":\\\"/bin/bash -c \\\\\\\"for((i=1;i<=10;i++));do echo -------------------参数3---------------- ;sleep 1;done\\\\\\\"\\\",\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"STRING\\\"}}}\",\"configerid\":0,\"flowName\":\"simple_shell\",\"share\":false,\"submiter\":0,\"updaterid\":0},{\"actionClass\":\"com.banggood.xwork.action.impl.ShellAction\",\"actionName\":\"action_4\",\"actionType\":\"NORMORL\",\"configParamJSON\":\"{\\\"parameters\\\":{\\\"xwork.shell.env\\\":{\\\"content\\\":{\\\"env\\\":\\\"/opt/modules/action_4\\\"},\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"MAP\\\"},\\\"xwork.shell.command\\\":{\\\"content\\\":\\\"/bin/bash -c \\\\\\\"for((i=1;i<=10;i++));do echo asdfasdfasdfasdfasfasdfasdfas ;sleep 1;done\\\\\\\"\\\",\\\"required\\\":true,\\\"setContent\\\":true,\\\"type\\\":\\\"STRING\\\"}}}\",\"configerid\":0,\"flowName\":\"simple_shell\",\"share\":false,\"submiter\":0,\"updaterid\":0}]",
+  "configParamJSON": "{\"parameters\":{\"runTime\":{\"content\":\"11111\",\"required\":true,\"setContent\":true,\"type\":\"STRING\"}}}",
+  "configerid": 2,
+  "createTime": "2018-03-02 15:40:21",
+  "delete": false,
+  "emailJson": "",
+  "flowName": "simple_shell",
+  "relationsJson": "{\"action_1\":{\"actionName\":\"action_1\",\"children\":[\"action_2\",\"action_3\"],\"dependWorkActions\":[],\"fathers\":[],\"remoteDepends\":[]},\"action_2\":{\"actionName\":\"action_2\",\"children\":[\"action_4\"],\"dependWorkActions\":[],\"fathers\":[\"action_1\"],\"remoteDepends\":[]},\"action_3\":{\"actionName\":\"action_3\",\"children\":[\"action_4\"],\"dependWorkActions\":[],\"fathers\":[\"action_1\"],\"remoteDepends\":[]},\"START\":{\"actionName\":\"START\",\"children\":[\"action_1\"],\"dependWorkActions\":[],\"fathers\":[],\"remoteDepends\":[]},\"END\":{\"children\":[],\"dependWorkActions\":[],\"fathers\":[\"action_4\"],\"remoteDepends\":[]},\"action_4\":{\"actionName\":\"action_4\",\"children\":[\"END\"],\"dependWorkActions\":[],\"fathers\":[\"action_2\",\"action_3\"],\"remoteDepends\":[]}}",
+  "share": false,
+  "submiter": 0,
+  "updaterid": 0
+}

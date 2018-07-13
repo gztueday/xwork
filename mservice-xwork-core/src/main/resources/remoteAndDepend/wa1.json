@@ -1,0 +1,234 @@
+[
+  {
+    "actionClass": "com.banggood.xwork.action.impl.ShellAction",
+    "actionName": "baction_1",
+    "actionType": "NORMORL",
+    "configParamJSON": "{\"parameters\":{\"xwork.shell.env\":{\"content\":{\"env\":\"/opt/modules/baction_1\"},\"required\":true,\"setContent\":true,\"type\":\"MAP\"},\"xwork.shell.command\":{\"content\":\"/bin/bash -c \\\"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\\\"\",\"required\":true,\"setContent\":true,\"type\":\"STRING\"}}}",
+    "configerid": 0,
+    "dependencyWorkActions": [],
+    "flowName": "remote_loop_B11111111",
+    "share": false,
+    "submiter": 0,
+    "updaterid": 0
+  },
+  {
+    "actionClass": "com.banggood.xwork.action.impl.ShellAction",
+    "actionName": "baction_2",
+    "actionType": "NORMORL",
+    "configParamJSON": "{\"parameters\":{\"xwork.shell.env\":{\"content\":{\"env\":\"/opt/modules/baction_2\"},\"required\":true,\"setContent\":true,\"type\":\"MAP\"},\"xwork.shell.command\":{\"content\":\"/bin/bash -c \\\"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\\\"\",\"required\":true,\"setContent\":true,\"type\":\"STRING\"}}}",
+    "configerid": 0,
+    "dependencyWorkActions": [
+      {
+        "remoteSwitch": false,
+        "schedulerid": 0,
+        "workActionName": "action_3",
+        "workFlowName": "remote-A"
+      },
+      {
+        "remoteSwitch": false,
+        "schedulerid": 0,
+        "workActionName": "caction_3",
+        "workFlowName": "remote-C"
+      }
+    ],
+    "flowName": "remote_loop_B11111111",
+    "share": false,
+    "submiter": 0,
+    "updaterid": 0
+  },
+  {
+    "actionClass": "com.banggood.xwork.action.impl.ShellAction",
+    "actionName": "baction_3",
+    "actionType": "NORMORL",
+    "configParamJSON": "{\"parameters\":{\"xwork.shell.env\":{\"content\":{\"env\":\"/opt/modules/baction_3\"},\"required\":true,\"setContent\":true,\"type\":\"MAP\"},\"xwork.shell.command\":{\"content\":\"/bin/bash -c \\\"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\\\"\",\"required\":true,\"setContent\":true,\"type\":\"STRING\"}}}",
+    "configerid": 0,
+    "dependencyWorkActions": [
+      {
+        "remoteSwitch": false,
+        "schedulerid": 0,
+        "workActionName": "action_3",
+        "workFlowName": "remote-A"
+      }
+    ],
+    "flowName": "remote_loop_B11111111",
+    "share": false,
+    "submiter": 0,
+    "updaterid": 0
+  },
+  {
+    "actionClass": "com.banggood.xwork.action.impl.ShellAction",
+    "actionName": "baction_4",
+    "actionType": "NORMORL",
+    "configParamJSON": "{\"parameters\":{\"xwork.shell.env\":{\"content\":{\"env\":\"/opt/modules/baction_4\"},\"required\":true,\"setContent\":true,\"type\":\"MAP\"},\"xwork.shell.command\":{\"content\":\"/bin/bash -c \\\"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\\\"\",\"required\":true,\"setContent\":true,\"type\":\"STRING\"}}}",
+    "configerid": 0,
+    "dependencyWorkActions": [],
+    "flowName": "remote_loop_B11111111",
+    "share": false,
+    "submiter": 0,
+    "updaterid": 0
+  }
+]
+
+{
+  "descriptors": [
+    {
+      "actionName": "wa_1",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wa_1"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "wa_2",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wa_2"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "wa_3",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wa_3"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    },
+    {
+      "actionName": "wa_4",
+      "actionType": "NORMORL",
+      "clazz": "com.banggood.xwork.action.impl.ShellAction",
+      "configs": {
+        "parameters": {
+          "xwork.shell.env": {
+            "content": {
+              "env": "/opt/modules/wa_4"
+            },
+            "required": true,
+            "setContent": true,
+            "type": "MAP"
+          },
+          "xwork.shell.command": {
+            "content": "/bin/bash -c \"for((i=1;i<=10;i++));do echo $env ;sleep 1;done\"",
+            "required": true,
+            "setContent": true,
+            "type": "STRING"
+          }
+        }
+      }
+    }
+  ],
+  "flowConfig": {
+    "parameters": {
+      "runTime": {
+        "content": "11111",
+        "required": true,
+        "setContent": true,
+        "type": "STRING"
+      }
+    }
+  },
+  "flowName": "wa1",
+  "relations": {
+    "wa_1": {
+      "actionName": "wa_1",
+      "children": [
+        "wa_2",
+        "wa_3"
+      ],
+      "fathers": []
+    },
+    "wa_2": {
+      "actionName": "wa_2",
+      "children": [
+        "wa_4"
+      ],
+      "fathers": [
+        "wa_1"
+      ],
+      "dependWorkActions": [
+        {
+          "workFlowName": "wb1",
+          "workActionName": "wb_2"
+        }
+      ]
+    },
+    "wa_3": {
+      "actionName": "wa_3",
+      "children": [
+        "wa_4"
+      ],
+      "fathers": [
+        "wa_1"
+      ]
+    },
+    "wa_4": {
+      "actionName": "wa_4",
+      "children": [
+        "END"
+      ],
+      "fathers": [
+        "wa_2",
+        "wa_3"
+      ]
+    },
+    "START": {
+      "children": [
+        "wa_1"
+      ],
+      "fathers": []
+    },
+    "END": {
+      "children": [],
+      "fathers": [
+        "wa_4"
+      ]
+    }
+  }
+}
