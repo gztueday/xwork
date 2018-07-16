@@ -8,7 +8,6 @@
 *.log.*
 *.class
 *.project
-target/
 log/
 *.iml
 
