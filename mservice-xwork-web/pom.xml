@@ -95,7 +95,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
-                            <mainClass>com.banggood.mservice.xwork.web.WebAPP</mainClass>
+                            <mainClass>com.bigdata.mservice.xwork.web.WebAPP</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

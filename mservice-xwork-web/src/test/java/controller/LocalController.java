@@ -2,7 +2,7 @@ package controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.banggood.mservice.xwork.rest.HttpRespone;
+import com.bigdata.mservice.xwork.rest.HttpRespone;
 import org.junit.Test;
 import remote.OkHTTPUtil;
 

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.bigdata.xwork.dao.mapper.SchedulerInstanceMapper">
+    <resultMap type="com.bigdata.xwork.dao.entity.WorkSchedulerInstance" id="BaseResultMap">
+        <result column="instanceid" property="instanceid"/>
+        <result column="version" property="version"/>
+        <result column="relations_json" property="relationsJson"/>
+        <result column="cron" property="cronStr"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="params" property="paramsJson"/>
+        <result column="date" property="date"/>
+        <result column="flowName" property="flowName"/>
+        <result column="wf_instanceid" property="wfInstanceid"/>
+        <result column="scheduler_name" property="schedulerName"/>
+        <result column="execute_ip" property="executeIp"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="scheduler_status" property="schedulerStatus"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO xwork.scheduler_instance
+        (instanceid, version, relations_json, cron, start_time, end_time, params, `date`, flowName, wf_instanceid, scheduler_name, execute_ip, `status`
+            , create_time, update_time, scheduler_status)
+        VALUES
+            (#{instanceid}, #{version}, #{relationsJson}, #{cronStr}, #{startTime}, #{endTime}, #{paramsJson}, #{date},
+                            #{flowName}, #{wfInstanceid}, #{schedulerName}, #{executeIp}, #{status}, #{createTime},
+             #{updateTime}, #{schedulerStatus})
+    </insert>
+
+    <insert id="insertWorkScheduler">
+        INSERT INTO xwork.scheduler_instance
+        (
+            instanceid,
+            version,
+            relations_json,
+            cron,
+            start_time,
+            end_time,
+            params,
+            `date`,
+            flowName,
+            wf_instanceid,
+            scheduler_name,
+            execute_ip,
+            `status`,
+            create_time,
+            update_time,
+            scheduler_status
+        )
+            SELECT
+                instanceid,
+                #{version} + 1,
+                relations_json,
+                cron,
+                start_time,
+                end_time,
+                params,
+                #{date},
+                flowName,
+                wf_instanceid,
+                scheduler_name,
+                execute_ip,
+                `status`,
+                create_time,
+                update_time,
+                scheduler_status
+            FROM
+                xwork.scheduler_instance
+            WHERE
+                instanceid = #{instanceid}
+                AND `status` = 'DISTRIBUTED'
+                AND version = (
+                    SELECT MAX(version)
+                    FROM
+                        xwork.scheduler_instance
+                    WHERE
+                        instanceid = #{instanceid}
+                        AND `status` = 'DISTRIBUTED'
+                    GROUP BY
+                        instanceid
+                )
+    </insert>
+
+    <update id="updateInstanceDate">
+        UPDATE xwork.scheduler_instance
+        SET `date` = #{date}
+        WHERE
+            instanceid = #{instanceid}
+            AND `status` = 'DISTRIBUTED'
+            AND version = (
+                SELECT MAX(version)
+                FROM
+                    xwork.scheduler_instance
+                WHERE
+                    instanceid = #{instanceid}
+                    AND `status` = 'DISTRIBUTED'
+                GROUP BY
+                    instanceid
+            )
+    </update>
+
+    <sql id="base_column">
+        SELECT
+            si.instanceid       AS instanceid,
+            si.version          AS version,
+            si.relations_json   AS relations_json,
+            si.cron             AS cron,
+            si.start_time       AS start_time,
+            si.end_time         AS end_time,
+            si.params           AS params,
+            si.`date`           AS `date`,
+            si.flowName         AS flowName,
+            si.wf_instanceid    AS wf_instanceid,
+            si.scheduler_name   AS scheduler_name,
+            si.execute_ip       AS execute_ip,
+            si.`status`         AS `status`,
+            si.create_time      AS create_time,
+            si.update_time      AS update_time,
+            si.scheduler_status AS scheduler_status
+    </sql>
+
+    <select id="querySchedulerByInstanceidAndVersion" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.scheduler_instance si WHERE si.instanceid=#{remoteInstanceid} AND version=#{version}
+    </select>
+
+    <update id="updateRelations">
+        UPDATE xwork.scheduler_instance
+        SET relations_json = #{schedulerRelations}
+        WHERE instanceid = #{remoteInstanceid} AND version = #{version}
+    </update>
+
+    <select id="queryByWorkFlowInstanceId" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.scheduler_instance si WHERE si.wf_instanceid=#{wfinstanceid}
+    </select>
+
+    <sql id="base_where">
+        <where>
+            si.create_time &gt;=#{beginDate}
+            AND si.create_time &lt;=#{endDate}
+            <if test="status!=null">
+                AND si.`scheduler_status`=#{status}
+            </if>
+            <if test="keyword!=null">
+                AND si.scheduler_name LIKE concat('%',#{keyword},'%')
+                OR si.instanceid LIKE concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="queryForCount" resultType="int">
+        SELECT count(1) FROM xwork.scheduler_instance si
+        <include refid="base_where"/>
+        AND si.version IN ( SELECT MIN(version)
+        FROM xwork.scheduler_instance
+        WHERE (scheduler_status = 'RUNNING' OR scheduler_status = 'DISTRIBUTED' OR scheduler_status = 'SUCCESS')
+        GROUP BY instanceid)
+    </select>
+
+    <select id="query" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.scheduler_instance si
+        <include refid="base_where"/>
+        AND si.version IN ( SELECT MIN(version)
+        FROM
+        xwork.scheduler_instance
+        WHERE
+        (scheduler_status = 'RUNNING' OR scheduler_status = 'DISTRIBUTED' OR scheduler_status = 'SUCCESS')
+        GROUP BY instanceid)
+        ORDER BY si.update_time DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="queryByScheduler" resultMap="BaseResultMap">
+        SELECT
+            si.instanceid,
+            si.scheduler_name
+        FROM xwork.scheduler_instance si
+        WHERE si.instanceid LIKE concat('%', #{schedulerName}, '%')
+              AND si.scheduler_status = 'RUNNING'
+        GROUP BY si.instanceid, si.scheduler_name
+    </select>
+
+    <select id="BundleDate" resultMap="BaseResultMap">
+        SELECT
+            si.`date`  AS `date`,
+            si.version AS version
+        FROM xwork.scheduler_instance si
+        WHERE si.instanceid = #{id}
+        ORDER BY si.version ASC
+    </select>
+
+    <update id="updateSchedulerStatus">
+        UPDATE xwork.scheduler_instance
+        SET `status` = #{status}
+        WHERE wf_instanceid = #{instanceid}
+    </update>
+
+    <select id="queryDispatcherCount" resultType="int">
+        SELECT COUNT(1)
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{instanceid} AND `status` = 'DISTRIBUTED'
+    </select>
+
+    <select id="selectExecuteDate" resultType="date">
+        SELECT `date`
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{instanceid} AND version = (
+            SELECT MAX(version)
+            FROM
+                xwork.scheduler_instance
+            WHERE
+                instanceid = #{instanceid}
+                AND `status` = 'DISTRIBUTED'
+            GROUP BY
+                instanceid
+        )
+    </select>
+
+    <update id="updateWorkFlowRelationIntoSchedulerStatus">
+        UPDATE xwork.scheduler_instance
+        SET `status`      = 'RUNNING',
+            wf_instanceid = #{workFlowInstance},
+            update_time   = #{runTime}
+        WHERE instanceid = #{instanceid}
+              AND version = #{version}
+    </update>
+
+    <update id="updateSchedulerInstanceToFail">
+        UPDATE xwork.scheduler_instance
+        SET `status`    = #{status},
+            update_time = #{updateTime}
+        WHERE instanceid = #{schedulerid} AND wf_instanceid = #{instanceid}
+    </update>
+
+    <select id="queryInstanceId" resultMap="BaseResultMap">
+        <include refid="base_column"/>
+        FROM xwork.scheduler_instance si
+        WHERE si.instanceid=#{schedulerInstance}
+        ORDER BY si.update_time DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="queryInstanceIdCount" resultType="int">
+        SELECT COUNT(1)
+        FROM xwork.scheduler_instance si
+        WHERE si.instanceid = #{schedulerInstance}
+    </select>
+
+    <select id="querySchedulerName" resultType="string">
+        SELECT scheduler_name
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstance}
+        GROUP BY instanceid, scheduler_name
+    </select>
+
+    <select id="queryWorkFlowName" resultType="string">
+        SELECT flowName
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstance}
+        GROUP BY instanceid, flowName
+    </select>
+
+    <select id="querySchedulerNameForInstanceId" resultMap="BaseResultMap">
+        SELECT
+            instanceid,
+            version,
+            relations_json,
+            cron,
+            start_time,
+            end_time,
+            params,
+            `date`,
+            flowName,
+            wf_instanceid,
+            scheduler_name,
+            execute_ip,
+            `status`,
+            create_time,
+            update_time,
+            scheduler_status
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstance}
+              AND version = (
+            SELECT MIN(version)
+            FROM
+                xwork.scheduler_instance
+            WHERE
+                instanceid = #{schedulerInstance}
+                AND `status` = 'RUNNING'
+            GROUP BY
+                instanceid
+        )
+    </select>
+
+    <select id="queryLatestRunningSchedulerInstance" resultMap="BaseResultMap">
+        SELECT
+            instanceid,
+            version,
+            relations_json,
+            cron,
+            start_time,
+            end_time,
+            params,
+            `date`,
+            flowName,
+            wf_instanceid,
+            scheduler_name,
+            execute_ip,
+            `status`,
+            create_time,
+            update_time,
+            scheduler_status
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstanceid}
+              AND wf_instanceid IS NOT NULL
+              AND `status` = 'RUNNING'
+    </select>
+
+    <select id="queryDispatcherScheduler" resultMap="BaseResultMap">
+        SELECT
+            instanceid,
+            version,
+            relations_json,
+            cron,
+            start_time,
+            end_time,
+            params,
+            `date`,
+            flowName,
+            wf_instanceid,
+            scheduler_name,
+            execute_ip,
+            `status`,
+            create_time,
+            update_time,
+            scheduler_status
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstanceid}
+              AND version = (
+            SELECT MIN(version)
+            FROM
+                xwork.scheduler_instance
+            WHERE
+                instanceid = #{schedulerInstanceid}
+                AND `status` = 'DISTRIBUTED'
+            GROUP BY
+                instanceid
+        )
+    </select>
+
+    <select id="querySchedulerByRunning" resultMap="BaseResultMap">
+        SELECT
+            instanceid,
+            version,
+            relations_json,
+            cron,
+            start_time,
+            end_time,
+            params,
+            `date`,
+            flowName,
+            wf_instanceid,
+            scheduler_name,
+            execute_ip,
+            `status`,
+            create_time,
+            update_time,
+            scheduler_status
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstanceid} AND wf_instanceid IS NOT NULL
+    </select>
+
+    <select id="queryMinVersionForDispatcher" resultType="long">
+        SELECT MIN(version)
+        FROM
+            xwork.scheduler_instance
+        WHERE
+            instanceid = #{schedulerInstanceId}
+            AND `status` = 'DISTRIBUTED'
+        GROUP BY
+            instanceid
+    </select>
+
+    <select id="queryMaxVersionForDispatcher" resultType="long">
+        SELECT MAX(version)
+        FROM
+            xwork.scheduler_instance
+        WHERE
+            instanceid = #{schedulerInstanceId}
+            AND `status` = 'DISTRIBUTED'
+        GROUP BY
+            instanceid
+    </select>
+
+    <select id="querySchedulerInstanceCount" resultType="int">
+        SELECT count(1)
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{remoteInstanceid}
+    </select>
+
+    <select id="queryCountForDispatcher" resultType="int">
+        SELECT count(1)
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstanceId} AND `status` = 'DISTRIBUTED'
+    </select>
+
+    <select id="selectExecuteMinDate" resultType="date">
+        SELECT `date`
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstanceId} AND version = (
+            SELECT MIN(version)
+            FROM
+                xwork.scheduler_instance
+            WHERE
+                instanceid = #{schedulerInstanceId}
+                AND `status` = 'DISTRIBUTED'
+            GROUP BY
+                instanceid
+        )
+    </select>
+
+    <update id="updateRelationForRightScheduler">
+        UPDATE xwork.scheduler_instance
+        SET relations_json = #{relationJson}
+        WHERE wf_instanceid = #{instanceid}
+    </update>
+
+    <update id="updateSchedulerStatusGroup">
+        UPDATE xwork.scheduler_instance
+        SET scheduler_status = #{status}
+        WHERE instanceid = #{schedulerInstanceid}
+    </update>
+
+    <select id="queryExecuteIpBySchedulerInstanceId" resultType="string">
+        SELECT execute_ip
+        FROM xwork.scheduler_instance
+        WHERE instanceid = #{schedulerInstance}
+        GROUP BY execute_ip
+    </select>
+
+</mapper>

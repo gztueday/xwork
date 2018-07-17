@@ -1,6 +1,6 @@
 package remote.scheduler;
 
-import com.banggood.mservice.xwork.web.WebAPP;
+import com.bigdata.mservice.xwork.web.WebAPP;
 import com.banggood.xwork.scheduler.core.DispatcherScheduler;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

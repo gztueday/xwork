@@ -3,7 +3,7 @@ package remote;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.banggood.mservice.xwork.rest.HttpRespone;
+import com.bigdata.mservice.xwork.rest.HttpRespone;
 import org.junit.Test;
 
 public class RemoteController {
